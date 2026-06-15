@@ -13,6 +13,14 @@ function NewsBlog() {
 
     let [news, setNews] = useState(["어제의 뉴스", "오늘의 뉴스", "내일의 뉴스"]);
 
+    let [likeCounts, setLikeCounts] = useState([0, 0, 0]);
+
+    let [modalIdx, setModalIdx] = useState(-1);
+
+    // Modal 창에 전달할 선택한 뉴스 포스팅의 관련 정보
+    let [selectedTitle, setSelectedTitle] = useState("");
+    let [selectedLikeCount, setSelectedLikeCount] = useState("");
+
     return (
         <div>
             <div className="black-nav">
@@ -22,8 +30,27 @@ function NewsBlog() {
             </div>
 
             {news.map((item, index) => {
-                return <NewsComp title={item} key={index} />;
+                return (
+                    <NewsComp
+                        title={item}
+                        likeCounts={likeCounts}
+                        setLikeCounts={setLikeCounts}
+                        index={index}
+                        modalIdx={modalIdx}
+                        setModalIdx={setModalIdx}
+                        key={index}
+                    />
+                );
             })}
+
+            <button
+                onClick={() => {
+                    let temp = [...news];
+                    temp[0] = "Today 긴급 속보";
+                    setNews(temp);
+                }}>
+                긴급제목변경
+            </button>
 
             {/* <div className="post-list">
                 <h4
@@ -74,16 +101,20 @@ function NewsBlog() {
 
             {/* modalFlag == true ?  <Modal/> : nul */}
 
-            {/* {modalFlag && <Modal />} */}
+            {modalIdx != -1 && (
+                <Modal
+                    title={news[modalIdx]}
+                    likeCount={likeCounts[modalIdx]}
+                    news={news}
+                    setNews={setNews}
+                    bgColor={"lightblue"}
+                />
+            )}
         </div>
     );
 }
 
-function NewsComp({ title }) {
-    let [likeCount, setLikeCount] = useState(0);
-
-    let [modalFlag, setModalFlag] = useState(false);
-
+function NewsComp({ title, likeCounts, setLikeCounts, index, modalIdx, setModalIdx }) {
     return (
         <div className="post-list">
             <h4
@@ -91,7 +122,7 @@ function NewsComp({ title }) {
                     //setModalFlag(true);
 
                     //setModalFlag( modalFlag ? false : true );
-                    setModalFlag(!modalFlag); // !true -> false    !false -> true
+                    setModalIdx(modalIdx != index ? index : -1); // !true -> false    !false -> true
                     //재렌더링
 
                     /* if(modalFlag){
@@ -105,15 +136,15 @@ function NewsComp({ title }) {
                     onClick={(event) => {
                         //event.preventDefault();
                         event.stopPropagation(); //이벤트 발생을 추가로 전파(전달)하는 것을 stop!
-                        setLikeCount(likeCount + 1); //재렌더링
+                        const tmpArr = [...likeCounts];
+                        tmpArr[index]++;
+                        setLikeCounts(tmpArr); //재렌더링
                     }}>
                     ❤
                 </span>{" "}
-                {likeCount}{" "}
+                {likeCounts[index]}{" "}
             </h4>
             <p>내용 무</p>
-
-            {modalFlag && <Modal />}
         </div>
     );
 }
