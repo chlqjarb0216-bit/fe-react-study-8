@@ -13,10 +13,6 @@ function NewsBlog() {
 
     let [news, setNews] = useState(["어제의 뉴스", "오늘의 뉴스", "내일의 뉴스"]);
 
-    let [likeCount, setLikeCount] = useState(0);
-
-    let [modalFlag, setModalFlag] = useState(false);
-
     return (
         <div>
             <div className="black-nav">
@@ -25,7 +21,11 @@ function NewsBlog() {
                 <div style={{ color: "orange", fontSize: "20px" }}>{title}</div>
             </div>
 
-            <div className="post-list">
+            {news.map((item, index) => {
+                return <NewsComp title={item} key={index} />;
+            })}
+
+            {/* <div className="post-list">
                 <h4
                     onClick={() => {
                         //setModalFlag(true);
@@ -39,6 +39,7 @@ function NewsBlog() {
                     } else {
                         setModalFlag(true);
                     } */
+            /*
                     }}>
                     {news[0]}{" "}
                     <span
@@ -60,7 +61,7 @@ function NewsBlog() {
             <div className="post-list">
                 <h4>{news[2]}</h4>
                 <p>내용자리</p>
-            </div>
+            </div> */}
 
             {/* <div className='post-list'>
                 <h4>{news1}</h4>
@@ -72,6 +73,45 @@ function NewsBlog() {
             </div> */}
 
             {/* modalFlag == true ?  <Modal/> : nul */}
+
+            {/* {modalFlag && <Modal />} */}
+        </div>
+    );
+}
+
+function NewsComp({ title }) {
+    let [likeCount, setLikeCount] = useState(0);
+
+    let [modalFlag, setModalFlag] = useState(false);
+
+    return (
+        <div className="post-list">
+            <h4
+                onClick={() => {
+                    //setModalFlag(true);
+
+                    //setModalFlag( modalFlag ? false : true );
+                    setModalFlag(!modalFlag); // !true -> false    !false -> true
+                    //재렌더링
+
+                    /* if(modalFlag){
+                        setModalFlag(false);
+                    } else {
+                        setModalFlag(true);
+                    } */
+                }}>
+                {title}{" "}
+                <span
+                    onClick={(event) => {
+                        //event.preventDefault();
+                        event.stopPropagation(); //이벤트 발생을 추가로 전파(전달)하는 것을 stop!
+                        setLikeCount(likeCount + 1); //재렌더링
+                    }}>
+                    ❤
+                </span>{" "}
+                {likeCount}{" "}
+            </h4>
+            <p>내용 무</p>
 
             {modalFlag && <Modal />}
         </div>
