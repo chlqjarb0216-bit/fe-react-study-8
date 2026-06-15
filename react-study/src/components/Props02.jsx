@@ -22,7 +22,9 @@ function Props02() {
 
                     // let temp2 = ...
                     detailArr.push("행복하다");
-                    setDetailArr(detailArr);
+
+                    // 아무일도 안함
+                    // setDetailArr(detailArr);
 
                     // 재렌더링 발생 조건 -> state변수값이 set함수를 통해서 변경
 
