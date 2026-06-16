@@ -33,10 +33,10 @@ function NewsBlog() {
             </div>
 
             {news.map((item, index) => {
-                console.log(item);
                 return (
                     <NewsComp
-                        title={item}
+                        news={news}
+                        setNews={setNews}
                         likeCounts={likeCounts}
                         setLikeCounts={setLikeCounts}
                         index={index}
@@ -87,7 +87,6 @@ function NewsBlog() {
                         let temp = [...news];
                         temp.push(trimed);
                         setNews(temp);
-                        console.log(news);
 
                         temp = [...likeCounts, 0];
                         setLikeCounts(temp);
@@ -160,7 +159,7 @@ function NewsBlog() {
     );
 }
 
-function NewsComp({ title, likeCounts, setLikeCounts, index, modalIdx, setModalIdx }) {
+function NewsComp({ news, setNews, likeCounts, setLikeCounts, index, modalIdx, setModalIdx }) {
     return (
         <div className="post-list">
             <h4
@@ -177,7 +176,7 @@ function NewsComp({ title, likeCounts, setLikeCounts, index, modalIdx, setModalI
                         setModalFlag(true);
                     } */
                 }}>
-                {title}{" "}
+                {news[index]}{" "}
                 <span
                     onClick={(event) => {
                         //event.preventDefault();
@@ -191,6 +190,14 @@ function NewsComp({ title, likeCounts, setLikeCounts, index, modalIdx, setModalI
                 {likeCounts[index]}{" "}
             </h4>
             <p>내용 무</p>
+            <button
+                onClick={() => {
+                    setNews(news.filter((_, idx) => idx != index));
+                    setLikeCounts(likeCounts.filter((_, idx) => idx != index));
+                    setModalIdx(modalIdx == -1 || modalIdx < index ? modalIdx : modalIdx - 1);
+                }}>
+                삭제
+            </button>
         </div>
     );
 }
