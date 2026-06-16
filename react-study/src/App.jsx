@@ -31,9 +31,9 @@ function App() {
         // <Quiz02 />
         // <Props02 />
         // <Quiz03 />
-        // <NewsBlog />
+        <NewsBlog />
         // <Quiz04 />
-        <Quiz05 />
+        // <Quiz05 />
     );
 }
 
