@@ -33,6 +33,7 @@ function NewsBlog() {
             </div>
 
             {news.map((item, index) => {
+                console.log(item);
                 return (
                     <NewsComp
                         title={item}
@@ -79,10 +80,17 @@ function NewsBlog() {
                 <button
                     onClick={() => {
                         // 발행 버튼 클릭 -> input 입력한 값 state변수에 저장된값 -> 배열에 등록/추가 처리
+                        const trimed = inputText.trim();
+
+                        if (trimed == "") return;
 
                         let temp = [...news];
-                        temp.push(inputText);
+                        temp.push(trimed);
                         setNews(temp);
+                        console.log(news);
+
+                        temp = [...likeCounts, 0];
+                        setLikeCounts(temp);
 
                         setInputText(""); //입력된 값 제거
                     }}>
