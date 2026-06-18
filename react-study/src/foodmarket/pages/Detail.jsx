@@ -138,6 +138,7 @@ function Detail({ foods }) {
                         <Button
                             variant="dard"
                             onClick={() => {
+                                if (orderCount <= 0) return;
                                 setOrderCount(orderCount - 1);
                             }}>
                             -
@@ -146,18 +147,25 @@ function Detail({ foods }) {
                         <Button
                             variant="dard"
                             onClick={() => {
+                                if (orderCount >= food.stockCount) return;
                                 setOrderCount(orderCount + 1);
                             }}>
                             +
                         </Button>
                     </p>
-                    <Button variant="primary">주문하기</Button>
+                    {food.stockCount == 0 ? (
+                        <Button variant="danger" disabled>
+                            품절
+                        </Button>
+                    ) : (
+                        <Button variant="primary">주문하기</Button>
+                    )}
                 </Col>
             </Row>
 
-            <Button variant="primary" onClick={() => setModalShow(true)}>
+            {/* <Button variant="primary" onClick={() => setModalShow(true)}>
                 Launch vertically centered modal
-            </Button>
+            </Button> */}
 
             <MyVerticallyCenteredModal show={modalShow} onHide={() => setModalShow(false)} />
         </Container>
