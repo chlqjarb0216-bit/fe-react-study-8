@@ -18,7 +18,6 @@ import Quiz04 from "./quiz/quiz04/Quiz04";
 import Quiz05 from "./quiz/quiz05/Quiz05";
 import FoodMarket from "./foodmarket/FoodMarket";
 import Quiz06 from "./quiz/quiz06/Quiz06";
-import Quiz07 from "../../router-quiz/src/quiz07/Quiz07";
 
 function App() {
     // let tmp = ABC();
@@ -38,10 +37,9 @@ function App() {
         // <NewsBlog />
         // <Quiz04 />
         // <Quiz05 />
-        // <FoodMarket />
+        <FoodMarket />
         // <Quiz06 />
         // tmp[0]
-        <Quiz07 />
     );
 }
 
