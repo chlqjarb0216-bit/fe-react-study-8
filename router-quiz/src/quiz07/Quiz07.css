@@ -1,0 +1,22 @@
+#q-navbar {
+    text-align: start;
+}
+
+.q-link {
+    display: inline-block;
+    border: 1px solid black;
+    padding: 0.2rem;
+}
+
+.p-main {
+    text-align: center;
+    background-color: gray;
+    color: black;
+}
+
+.h1-element {
+    text-align: center;
+    background-color: gray;
+    line-height: normal;
+    margin: 0;
+}
