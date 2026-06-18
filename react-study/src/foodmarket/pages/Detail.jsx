@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { Container, Row, Col, Button } from "react-bootstrap";
+import { Container, Row, Col, Button, Modal } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router";
+import "./Detail.css";
 
 function Detail({ foods }) {
     // Detail 페이지에서 보여줄 상품정보
@@ -35,6 +36,12 @@ function Detail({ foods }) {
 
     useEffect(() => {
         console.log("useEffect 함수 실행 [orderCount] 의존성배열");
+        console.log("useEffect[orderCount] : " + orderCount);
+
+        return () => {
+            // clean up function
+            console.log("useEffect[orderCount] -> return () 실행");
+        };
     }, [orderCount]); // 의존성 배열에 존재하는 값 -> 참고
 
     useEffect(() => {
@@ -44,6 +51,41 @@ function Detail({ foods }) {
     useEffect(() => {
         console.log("useEffect 함수 실행 [test, orderCount] 의존성배열");
     }, [test, orderCount]); // 의존성 배열에 존재하는 값 -> 참고
+
+    let [viewStatus, setViewStatus] = useState("");
+    let [modalShow, setModalShow] = useState(true); // 모달창 표시 여부 true/false
+
+    useEffect(() => {
+        // setViewStatus("end");
+        if (!modalShow)
+            setTimeout(() => {
+                setViewStatus("end");
+            }, 100);
+    }, [modalShow]);
+
+    // Modal 창 자동으로 닫히게 적용
+    useEffect(() => {
+        // modalShow    state변수 true-> false
+
+        setTimeout(() => {
+            setModalShow(false);
+        }, 2000);
+    });
+
+    useEffect(() => {
+        // setTimeout
+        // setInterval
+        // 비동기방식
+
+        const interv = setInterval(() => {
+            console.log("interval");
+        }, 1000);
+
+        // clean up function
+        return () => {
+            clearInterval(interv);
+        };
+    }, [orderCount]);
 
     // -------------------------------------------------------------------
 
@@ -79,7 +121,7 @@ function Detail({ foods }) {
     }
 
     return (
-        <Container>
+        <Container className={"start " + viewStatus}>
             <Row>
                 <Col md={6}>
                     <img
@@ -112,8 +154,31 @@ function Detail({ foods }) {
                     <Button variant="primary">주문하기</Button>
                 </Col>
             </Row>
+
+            <Button variant="primary" onClick={() => setModalShow(true)}>
+                Launch vertically centered modal
+            </Button>
+
+            <MyVerticallyCenteredModal show={modalShow} onHide={() => setModalShow(false)} />
         </Container>
     );
 }
 
 export default Detail;
+
+function MyVerticallyCenteredModal(props) {
+    return (
+        <Modal {...props} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
+            <Modal.Header closeButton>
+                <Modal.Title id="contained-modal-title-vcenter">어서오세요~</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <h4>Food Good!!!</h4>
+                <p>많이 많이 구매하세요~</p>
+            </Modal.Body>
+            <Modal.Footer>
+                <Button onClick={props.onHide}>Close</Button>
+            </Modal.Footer>
+        </Modal>
+    );
+}
