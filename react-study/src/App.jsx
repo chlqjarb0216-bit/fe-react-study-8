@@ -19,6 +19,7 @@ import Quiz05 from "./quiz/quiz05/Quiz05";
 import FoodMarket from "./foodmarket/FoodMarket";
 import Quiz06 from "./quiz/quiz06/Quiz06";
 import Market from "./test/Market";
+import SortingTest from "./testtest/SortingTest";
 
 function App() {
     // let tmp = ABC();
@@ -42,6 +43,7 @@ function App() {
         // <Quiz06 />
         // tmp[0]
         <Market />
+        // <SortingTest />
     );
 }
 
